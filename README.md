@@ -1,82 +1,81 @@
 # Animal Detection and Deterrent Device
 
-UNDER DEVELOPMENT
+## Overview
 
-### **Best Way to Download & Maintain Correct File Structure**
+This project is an AI-powered animal detection and deterrent system designed to identify and deter unwanted animals from specific areas. The system uses a camera to capture video, processes the video using a TensorFlow Lite model to detect animals, and triggers an alert if an unwanted animal is detected. The system also includes a web-based user interface for monitoring and managing detected events.
 
-To **download and set up the full project** on another device while maintaining the correct file structure, follow these steps:
+## Features
 
----
+- Real-time animal detection using TensorFlow Lite
+- Motion detection with OpenCV
+- Alerts via sound, MQTT, and Firebase Cloud Messaging (FCM)
+- Web-based UI for monitoring and managing events
+- Database to store detected events and unwanted animals
 
-### **1. Clone the GitHub Repository**
-If the code is already pushed to **GitHub**, use:
-```bash
-git clone <your-repository-url>
-cd ai-animal-detection  # Replace with your actual project folder
-```
-This ensures the correct file structure is maintained.
+## Deployment Instructions
 
-If you haven't pushed to GitHub yet, refer to the **GitHub setup instructions** above.
+### Prerequisites
 
----
+- A device running a Debian-based OS (e.g., Raspberry Pi)
+- Python 3.x installed
+- Node.js and npm installed
+- Git installed
 
-### **2. Verify the Project Structure**
-Your project should have the following structure:
-```
-/ai-animal-detection
-│── setup_device.sh             # Shell script for setup
-│── ai_animal_detection.py       # Backend AI detection script
-│── events.db                    # SQLite database (auto-generated)
-│── model.tflite                 # TensorFlow Lite model
-│── ui/                          # React UI
-│   │── src/
-│   │   ├── AnimalDetectionUI.jsx  # React UI component
-│   │   ├── index.js
-│   │   ├── firebase-messaging-sw.js  # Firebase service worker
-│   ├── package.json
-│   ├── public/
-│   ├── node_modules/ (auto-installed)
-```
----
+### Setup
 
-### **3. Install Dependencies**
-Navigate to the project directory and run the **setup script**:
-```bash
-chmod +x setup_device.sh
-./setup_device.sh
-```
-This installs all necessary dependencies.
+1. **Clone the repository:**
 
----
+    ```sh
+    git clone https://github.com/mbookham7/pi-animal-detection-and-deterrant.git
+    cd pi-animal-detection-and-deterrant
+    ```
 
-### **4. Start the Backend**
-```bash
-source env/bin/activate
-python ai_animal_detection.py
-```
+2. **Run the setup script for Coral device:**
 
----
+    ```sh
+    ./setup_coral.sh
+    ```
 
-### **5. Start the React UI**
-Navigate to the `ui` folder:
-```bash
-cd ui
-npm install  # Ensure dependencies are installed
-npm start
-```
-Now, access the UI at:
-```bash
-http://<DEVICE_IP>:3000
-```
+    Or, for other devices, run:
 
----
+    ```sh
+    ./setup_device.sh
+    ```
 
-### **Alternative: Downloading Individual Files**
-If you need to manually download individual files:
-1. **Download them via GitHub** (if hosted).
-2. **Manually copy and paste** files from this chat into a local project.
-3. Ensure they are **saved in the correct directories**.
+3. **Ensure the required files are in place:**
 
----
+    - [alert.wav](http://_vscodecontentref_/1) (alert sound file)
+    - `model.tflite` (TensorFlow Lite model file)
 
-Would you like a **compressed ZIP version** of the entire project for easy download? 🚀
+4. **Start the services:**
+
+    ```sh
+    sudo systemctl start ai_detection
+    sudo systemctl start react_ui
+    ```
+
+5. **Enable the services to start on boot:**
+
+    ```sh
+    sudo systemctl enable ai_detection
+    sudo systemctl enable react_ui
+    ```
+
+6. **Access the web UI:**
+
+    Open a web browser and navigate to `http://<DEVICE_IP>:3000` to access the web-based user interface.
+
+### Additional Information
+
+- The Flask API runs on port 5000.
+- The web UI runs on port 3000.
+- The system uses a SQLite database to store events and unwanted animals.
+- The AI model and alert sound file must be placed in the working directory.
+
+### Troubleshooting
+
+- Ensure all dependencies are installed correctly.
+- Check the status of the services using `sudo systemctl status ai_detection` and `sudo systemctl status react_ui`.
+- Verify that the camera is connected and accessible.
+
+For more detailed information, refer to the comments and documentation within the source code.
