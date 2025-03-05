@@ -33,12 +33,14 @@ This project is an AI-powered animal detection and deterrent system designed to 
 2. **Run the setup script for Coral device:**
 
     ```sh
+    chmod +x setup_coral.sh
     ./setup_coral.sh
     ```
 
     Or, for other devices, run:
 
     ```sh
+    chmod +x setup_device.sh
     ./setup_device.sh
     ```
 
