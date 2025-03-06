@@ -135,7 +135,10 @@ while True:
         
         # Trigger sound if unwanted
         if detected_object in unwanted_animals:
-            sound.play()
+            start_time = datetime.now()
+            while (datetime.now() - start_time).seconds < 30:
+                sound.play()
+                pygame.time.wait(int(sound.get_length() * 1000))  # Wait for the sound to finish before replaying
             print(f"ALERT: {detected_object} detected!")
     
     # Show camera feed
